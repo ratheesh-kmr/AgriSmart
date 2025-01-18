@@ -1,5 +1,5 @@
 import express from 'express';
-import { Market } from '../Models/Market.js';  // Import the Market model
+import { Market } from '../Models/market.js';  // Import the Market model
 
 const router = express.Router();
 
