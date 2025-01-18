@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
+import MarketPlaceCard from './MarketPlaceCard';
 
-const NetProfitCalculator = ({ cropDetails, marketplace }) => {
-  const [netProfit, setNetProfit] = useState(null);
-
-  const calculateNetProfit = () => {
-    const { cropName, quantity, location } = cropDetails;
-    const { crop_price, transportation_cost } = marketplace;
-
-    // Simple calculation: Net profit = (crop price * quantity) - transportation cost
-    const profit = (crop_price * quantity) - transportation_cost;
-    setNetProfit(profit);
-  };
-
+function NetProfitCalculator({ marketData }) {
   return (
-    <div className="profit-calculator">
-      <h4>Net Profit Calculation</h4>
-      <button onClick={calculateNetProfit}>Calculate Net Profit</button>
-      {netProfit !== null && <p>Net Profit: ₹{netProfit}</p>}
+    <div className="net-profit-calculator">
+      {marketData.map((data, index) => (
+        <MarketPlaceCard
+          key={index}
+          market={data.market}
+          netProfit={data.netProfit}
+          transportCost={data.transportCost}
+        />
+      ))}
     </div>
   );
-};
+}
 
 export default NetProfitCalculator;

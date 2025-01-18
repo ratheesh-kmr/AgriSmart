@@ -1,23 +1,13 @@
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
-dotenv.config();
+import app from './app.js';
+import db from './config/db.js';
 
-const sequelize = new Sequelize(
-  process.env.APP_DB, // Database name
-  process.env.DB_USER, // User
-  process.env.DB_PASSWORD, // Password
-  {
-    host: process.env.DB_HOST,
-    dialect: 'postgres', // or mysql, etc.
-  }
-);
+const PORT = process.env.PORT || 5000;
 
-sequelize.authenticate()
+db.sync()
   .then(() => {
-    console.log('Database connection established successfully.');
+    console.log('Database connected successfully');
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
   })
-  .catch((error) => {
-    console.error('Unable to connect to the database:', error);
-  });
-
-export default sequelize;
+  .catch((err) => console.error('Database connection error:', err));

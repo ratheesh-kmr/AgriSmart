@@ -1,18 +1,24 @@
-import { DataTypes } from 'sequelize';
-import db from '../config/db.js';
+// backend/models/crop.js
 
-const Crop = db.define('Crop', {
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/db.js';  // Default import for sequelize
+
+// Define the Crop model
+const Crop = sequelize.define('Crop', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  pricePerUnit: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.TEXT,
-  },
+  // Additional fields can be added as needed
+}, {
+  timestamps: false,  // Disable timestamps if not required
+  tableName: 'crops',  // Specify the table name
 });
 
-export default Crop;
+// Export the Crop model for use in routes
+export { Crop };

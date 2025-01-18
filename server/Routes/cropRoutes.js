@@ -1,22 +1,17 @@
-// In your server.js or a specific routes file (e.g., cropRoutes.js)
 import express from 'express';
-import appDB from './config/db.js';
+import { Crop } from '../Models/crop.js';  // Sequelize model for crops
 
 const router = express.Router();
 
-// Endpoint to search for crops
-router.get('/search-crops', async (req, res) => {
-  const searchQuery = req.query.name.toLowerCase();
+// API to get all crops
+router.get('/', async (req, res) => {
   try {
-    const result = await appDB.query(
-      'SELECT name FROM crops WHERE LOWER(name) LIKE $1 LIMIT 5',
-      [`%${searchQuery}%`]
-    );
-    res.json(result.rows); // Return the crop names
+    const crops = await Crop.findAll();  // Database query to fetch all crops
+    res.json(crops);  // Return the crops as a JSON response
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error fetching crops' });
+    res.status(500).json({ message: 'Error fetching crops in crop routes' });
   }
 });
 
-export default router;
+export { router };  // Export the router for use in the app

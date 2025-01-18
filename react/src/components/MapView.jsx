@@ -1,25 +1,20 @@
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import 'leaflet/dist/leaflet.css';
+import React from 'react';
+import '../assets/styles/styles.css';
 
-const MapView = ({ marketplaces }) => {
+function MapView({ markets }) {
   return (
-    <MapContainer
-      center={[51.505, -0.09]} // Default map center
-      zoom={13}
-      style={{ height: "400px", width: "100%" }}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-      />
-      {marketplaces?.map((marketplace, index) => (
-        <Marker key={index} position={[marketplace.lat, marketplace.lng]}>
-          <Popup>{marketplace.name}</Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    <div className="map-view">
+      <h3>Marketplace Locations</h3>
+      {/* Mock map display */}
+      <ul>
+        {markets.map((market, index) => (
+          <li key={index}>
+            {market.name} - {market.location}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
-};
+}
 
 export default MapView;

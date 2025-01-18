@@ -1,27 +1,27 @@
-import pg from 'pg';
+import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
 
 // Load environment variables from .env file
 dotenv.config();
 
-const { Pool } = pg;
-
-// Create a new Pool instance with the connection settings from .env
-const appDB = new Pool({
-  user: process.env.DB_USER,          // Your database username
-  host: process.env.DB_HOST,          // Your database host (usually 'localhost')
-  database: process.env.APP_DB,       // The name of the database
-  password: process.env.DB_PASSWORD,  // The password for your database
-  port: process.env.DB_PORT           // The port number (usually 5432 for PostgreSQL)
+// Set up the Sequelize instance
+const sequelize = new Sequelize({
+  host: process.env.DB_HOST,            
+  username: process.env.DB_USER,        
+  password: process.env.DB_PASSWORD,    
+  database: process.env.APP_DB,         
+  dialect: 'postgres',                  
+  port: process.env.DB_PORT,            
+  logging: false,                       
 });
 
 // Test the connection
-appDB.connect((err) => {
-  if (err) {
-    console.error('Database connection error:', err.stack);
-  } else {
-    console.log('Connected to App DB.');
-  }
-});
+sequelize.authenticate()
+  .then(() => {
+    console.log('Database connected successfully');
+  })
+  .catch((err) => {
+    console.error('Unable to connect to the database:', err);
+  });
 
-export default appDB;
+export default sequelize;

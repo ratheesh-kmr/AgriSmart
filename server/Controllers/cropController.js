@@ -1,4 +1,4 @@
-import Crop from '../models/Crop.js';
+import Crop from "../Models/crop";
 
 export const getCrops = async (req, res) => {
   try {

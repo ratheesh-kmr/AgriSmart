@@ -1,5 +1,5 @@
 import Market from '../models/Market.js';
-import { calculateProfit } from '../utils/profitUtils.js';
+import { calculateProfit } from '../Utils/profitUtils.js';
 
 export const getMarketData = async (req, res) => {
   try {

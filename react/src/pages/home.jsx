@@ -1,14 +1,11 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import InputForm from '../components/InputForm';
 
-function Home() {
-  const [cropDetails, setCropDetails] = useState(null);
-
+function Home({ setCropDetails }) {
   return (
-    <div className="home-container">
-      <h1>AgriSmart - Crop Market Price Analysis</h1>
-      <InputForm setCropDetails={setCropDetails} />
-      {cropDetails && <p>Crop details entered, proceed to see results!</p>}
+    <div className="home">
+      <h1>AgriSmart</h1>
+      <InputForm onSubmit={setCropDetails} />
     </div>
   );
 }

@@ -1,13 +1,15 @@
-function MarketPlaceCard({ data }) {
-    return (
-      <div className="marketplace-card">
-        <h3>{data.marketplaceName}</h3>
-        <p>Price: {data.price}</p>
-        <p>Location: {data.location}</p>
-        <p>Transportation Cost: {data.transportationCost}</p>
-      </div>
-    );
-  }
-  
-  export default MarketPlaceCard;
-  
+import React from 'react';
+import '../assets/styles/styles.css';
+
+function MarketPlaceCard({ market, netProfit, transportCost }) {
+  return (
+    <div className="marketplace-card">
+      <h3>{market}</h3>
+      <p>Net Profit: ₹{netProfit.toFixed(2)}</p>
+      <p>Transport Cost: ₹{transportCost.totalCost.toFixed(2)}</p>
+      <p>Distance: {transportCost.distance} km</p>
+    </div>
+  );
+}
+
+export default MarketPlaceCard;

@@ -1,7 +1,16 @@
-const express = require('express');
+// backend/routes/marketRoutes.js
+
+import express from 'express';
 const router = express.Router();
-const marketController = require('../Controllers/marketController');
 
-router.get('/market', marketController.getMarketData);
+// Example route to get market data
+router.get('/', async (req, res) => {
+  try {
+    const markets = await markets.findAll(); // Your database query logic here
+    res.json(markets);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching markets' });
+  }
+});
 
-module.exports = router;
+export default router;  // Default export for the router
