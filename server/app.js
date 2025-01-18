@@ -1,24 +1,24 @@
-const express = require('express');
-const cors = require('cors');
-const cropRoutes = require('./Routes/cropRoutes');
-const marketRoutes = require('./Routes/marketRoutes');
-const transportationRoutes = require('./Routes/transportationRoutes');
-const { connectDB } = require('./config/db');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import cropRoutes from './Routes/cropRoutes.js'; // Example of imported route
 
-// Initialize Express app
+dotenv.config(); // Load environment variables from .env file
+
 const app = express();
 
-// Database connection
-connectDB();
-
-// Middleware
-app.use(express.json());
-app.use(cors());
+// Middlewares
+app.use(cors()); // Enable CORS
+app.use(bodyParser.json()); // Parse incoming JSON requests
 
 // Routes
-app.use('/api', cropRoutes);
-app.use('/api', marketRoutes);
-app.use('/api', transportationRoutes);
+app.use('/api/crops', cropRoutes); // Mount crop routes
 
-module.exports = app;
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send({ message: 'Something went wrong!' });
+});
+
+export default app;

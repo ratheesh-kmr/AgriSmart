@@ -1,0 +1,115 @@
+/* General body styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e8f0f3; /* Light blue background for a refreshing look */
+    color: #2a2d34; /* Dark grey text for readability */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  /* Form container */
+  form {
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    padding: 30px 40px;
+    background-color: #ffffff;
+    border-radius: 12px; /* Larger rounded corners for a modern look */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd; /* Light border for subtle contrast */
+    transition: transform 0.2s ease;
+  }
+  
+  /* Hover effect for the form container */
+  form:hover {
+    transform: scale(1.02); /* Slightly scale up the form on hover */
+  }
+  
+  /* Header for the form */
+  h2 {
+    text-align: center;
+    color: #4e5b6e;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+  }
+  
+  /* Form labels */
+  label {
+    display: block;
+    font-size: 18px;
+    color: #5c6b77;
+    margin-bottom: 10px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  /* Change label color on focus */
+  input[type="text"]:focus + label {
+    color: #007bff;
+  }
+  
+  /* Input fields */
+  input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #c3d1d9;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333;
+    background-color: #f9fbfc;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  
+  /* Focused input field */
+  input[type="text"]:focus {
+    border-color: #0099ff; /* Bright blue border when focused */
+    background-color: #fff; /* White background when focused */
+    outline: none;
+  }
+  
+  /* Submit button */
+  button {
+    width: 100%;
+    padding: 14px;
+    background-color: #007bff; /* Blue background for the button */
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  /* Button hover effect */
+  button:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px); /* Slight lift effect on hover */
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 600px) {
+    body {
+      padding: 15px;
+    }
+  
+    form {
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 24px;
+    }
+  
+    label, input[type="text"] {
+      font-size: 16px;
+    }
+  }
+  

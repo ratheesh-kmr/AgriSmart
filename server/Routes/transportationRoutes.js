@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const transportationController = require('../controllers/transportationController');
+const transportationController = require('../Controllers/transportationController');
 
 router.get('/transportation', transportationController.getTransportationCost);
 

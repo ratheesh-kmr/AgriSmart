@@ -1,8 +1,12 @@
 import { DataTypes } from 'sequelize';
 import db from '../config/db.js';
 
-const Crop = db.define('Crop', {
+const Market = db.define('Market', {
   name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  location: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -10,9 +14,6 @@ const Crop = db.define('Crop', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
-  description: {
-    type: DataTypes.TEXT,
-  },
 });
 
-export default Crop;
+export default Market;
