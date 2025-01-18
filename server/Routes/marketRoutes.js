@@ -1,16 +1,17 @@
-// backend/routes/marketRoutes.js
-
 import express from 'express';
+import { Market } from '../Models/Market.js';  // Import the Market model
+
 const router = express.Router();
 
-// Example route to get market data
-router.get('/', async (req, res) => {
+// API endpoint to get all markets
+router.get('/api/markets', async (req, res) => {
   try {
-    const markets = await markets.findAll(); // Your database query logic here
-    res.json(markets);
+    const markets = await Market.findAll();  // Fetch all records from the markets table
+    res.json(markets);  // Return the results as JSON
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching markets' });
+    console.error('Error fetching markets:', error);
+    res.status(500).json({ error: 'Error fetching markets from the database' });
   }
 });
 
-export default router;  // Default export for the router
+export default router;

@@ -1,16 +1,27 @@
 import express from 'express';
-import { Crop } from '../Models/crop.js';  // Sequelize model for crops
+import { Sequelize } from 'sequelize';  // Import Sequelize to access Op for operators
+import { Crop } from '../Models/crop.js';  // Import the Crop model
 
 const router = express.Router();
 
-// API to get all crops
-router.get('/', async (req, res) => {
+// Route to get all crops
+router.get('/search-crops', async (req, res) => {
+  const { name } = req.query;  // Get the crop name from the query parameter
+
   try {
-    const crops = await Crop.findAll();  // Database query to fetch all crops
-    res.json(crops);  // Return the crops as a JSON response
+    // Use Sequelize to find matching crops
+    const crops = await Crop.findAll({
+      where: {
+        name: {
+          [Sequelize.Op.like]: `%${name}%`,  // Using Sequelize's LIKE operator for search
+        },
+      },
+    });
+
+    res.json(crops);  // Return the matching crops as JSON
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching crops in crop routes' });
+    console.error('Error fetching crops:', error);
+    res.status(500).json({ error: 'Failed to fetch crops' });
   }
 });
 

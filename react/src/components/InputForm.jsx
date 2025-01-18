@@ -1,77 +1,85 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import '../assets/styles/styles.css';
 
-function InputForm({ onSubmit }) {
+function InputForm({ setCropDetails }) {
   const [cropName, setCropName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [location, setLocation] = useState('');
-  const [crops, setCrops] = useState([]);  // Store fetched crops
-  const [isLoading, setIsLoading] = useState(false);  // Loading state for fetching crops
+  const [responseData, setResponseData] = useState(null); // State for the response
 
-  // Fetch crops from the backend on component mount
-  useEffect(() => {
-    const fetchCrops = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch('/api/crops');  // Call the crops API
-        const data = await response.json();
-        setCrops(data);  // Set the crops data
-      } catch (error) {
-        console.error('Error fetching crops:', error);
-      } finally {
-        setIsLoading(false);
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Prepare data for submission
+    const cropData = {
+      cropName,
+      quantity,
+      location,
     };
 
-    fetchCrops();  // Fetch crops on mount
-  }, []);  // Empty dependency array to only fetch once
+    // Set the crop details
+    setCropDetails(cropData);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ cropName, quantity, location });
+    try {
+      // Send the data to the backend
+      const response = await fetch('/api/submit-crop', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cropData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setResponseData(data); // Store the result in state
+      } else {
+        console.error('Error submitting crop data');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Crop Name:
-        <select
-          value={cropName}
-          onChange={(e) => setCropName(e.target.value)}  // Update cropName on selection
-        >
-          <option value="">Select a crop</option>
-          {isLoading ? (
-            <option value="">Loading...</option>
-          ) : (
-            crops.map((crop) => (
-              <option key={crop.id} value={crop.name}>
-                {crop.name}
-              </option>
-            ))
-          )}
-        </select>
-      </label>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Crop Name:
+          <input
+            type="text"
+            value={cropName}
+            onChange={(e) => setCropName(e.target.value)}
+          />
+        </label>
+        <label>
+          Quantity:
+          <input
+            type="text"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </label>
+        <label>
+          Location:
+          <input
+            type="text"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </label>
+        <button type="submit">Submit</button>
+      </form>
 
-      <label>
-        Quantity:
-        <input
-          type="text"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-        />
-      </label>
-      
-      <label>
-        Location:
-        <input
-          type="text"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-      </label>
-      
-      <button type="submit">Submit</button>
-    </form>
+      {/* Display response data after submission */}
+      {responseData && (
+        <div>
+          <h3>Results</h3>
+          <p>Marketplace: {responseData.marketplace}</p>
+          <p>Transportation Cost: {responseData.transportationCost}</p>
+          <p>Net Profit: {responseData.netProfit}</p>
+        </div>
+      )}
+    </div>
   );
 }
 

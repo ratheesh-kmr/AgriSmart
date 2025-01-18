@@ -1,5 +1,3 @@
-// backend/models/crop.js
-
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/db.js';  // Default import for sequelize
 
@@ -12,9 +10,12 @@ const Crop = sequelize.define('Crop', {
   },
   name: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: false,  // Crop name cannot be null
   },
-  // Additional fields can be added as needed
+  price_per_kg: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false,  // Price per kg is required and should be a decimal
+  },
 }, {
   timestamps: false,  // Disable timestamps if not required
   tableName: 'crops',  // Specify the table name
